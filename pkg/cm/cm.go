@@ -43,6 +43,3 @@ o - add line, yy/dd - yank (copy)/delete line, p - paste, c - change
 >>/<< - indent/outdent, /word - find, n - find next, N - find previous
 `
 }
-
-	return `
-

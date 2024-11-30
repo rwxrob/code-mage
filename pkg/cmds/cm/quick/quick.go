@@ -11,7 +11,7 @@ var Cmd = &bonzai.Cmd{
 	Alias: `q`,
 	Short: `one-screen cli quick reference`,
 	Do: func(*bonzai.Cmd, ...string) error {
-		term.Print(cm.QuickRef())
+		term.Print(cm.QuickRefShell())
 		return nil
 	},
 }
