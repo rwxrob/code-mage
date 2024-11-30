@@ -4,7 +4,7 @@ go 1.23.3
 
 require (
 	github.com/rwxrob/bonzai v0.53.0
-	github.com/rwxrob/bonzai/cmds/help v0.7.6
+	github.com/rwxrob/bonzai/cmds/help v0.7.7
 	github.com/rwxrob/bonzai/cmds/sunrise v1.0.3
 	github.com/rwxrob/bonzai/comp v0.10.0
 )

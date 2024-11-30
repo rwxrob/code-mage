@@ -7,7 +7,8 @@ import (
 )
 
 var Cmd = &bonzai.Cmd{
-	Name: `fun`,
-	Cmds: []*bonzai.Cmd{sunrise.Cmd},
-	Comp: comp.Cmds,
+	Name:  `fun`,
+	Short: `fun stuff`,
+	Cmds:  []*bonzai.Cmd{sunrise.Cmd},
+	Comp:  comp.Cmds,
 }
