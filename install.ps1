@@ -25,5 +25,5 @@ Write-Host "Running the Bash script..."
 & $gitBashPath -c "`"$tempScriptPath`""
 
 # Clean up the temporary file
-Remove-Item -Path $tempScriptPath -Force
-Write-Host "Temporary script file removed."
+#Remove-Item -Path $tempScriptPath -Force
+#Write-Host "Temporary script file removed."
