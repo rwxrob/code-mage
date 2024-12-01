@@ -109,7 +109,8 @@ if (-Not (Test-Path $path)) {
 }
 Write-Host "Golang (go) installed successfully."
 
-Write-Host "Installing Code-Mage (cm) using go..."
+Write-Host 'Installing Code-Mage (cm) using go...'
 $path install "github.com/rwxrob/code-mage/cmd/cm@latest"
 # TODO validate cm install
-Write-Host "Code-Mage (cm) installed successfully."
+Write-Host 'Code-Mage (cm) installed successfully.'
+
