@@ -78,6 +78,10 @@ install-alacritty() {
 }
 
 config-alacritty() {
+	if iswin && test -e "$APPDATA/alacritty/alacritty.toml"; then
+		echo "Alacritty config detected, skipping."
+		return
+	fi
 	if test -e ~/.config/alacritty/alacritty.toml; then
 		echo "Alacritty config detected, skipping."
 		return
