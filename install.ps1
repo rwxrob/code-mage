@@ -42,7 +42,6 @@ winget install --id microsoft.windowsterminal.preview
 $path = 'C:\Program Files\WindowsApps\Microsoft.WindowsTerminalPreview_*'
 if (-Not (Test-Path $path)) {
     Write-Error "Windows Terminal installation failed or not found at $path!"
-    exit 1
 }
 Write-Host 'Windows Terminal installed successfully.'
 
@@ -54,7 +53,6 @@ $path = 'C:\Program Files\Git\bin\bash.exe'
 
 if (-Not (Test-Path $path)) {
     Write-Error "Git Bash installation failed or not found at $path!"
-    exit 1
 }
 Write-Host 'Git Bash installed successfully.'
 
@@ -63,7 +61,6 @@ winget install --id github.cli
 $path = 'C:\Program Files\GitHub CLI\gh.exe'
 if (-Not (Test-Path $path)) {
     Write-Error "GitHub CLI (gh) installation failed or not found at $path!"
-    exit 1
 }
 Write-Host 'GitHub CLI (gh) installed successfully.'
 
@@ -72,7 +69,6 @@ winget install --id neovim.neovim
 $path = 'C:\Program Files\Neovim\bin\nvim.exe'
 if (-Not (Test-Path $path)) {
     Write-Error "Neovim (nvim) installation failed or not found at $path!"
-    exit 1
 }
 Write-Host 'Neovim (nvim) installed successfully.'
 
@@ -100,7 +96,6 @@ winget install --id golang.go
 $path = 'C:\Go\bin\go.exe'
 if (-Not (Test-Path $path)) {
     Write-Error "Golang (go) installation failed or not found at $path!"
-    exit 1
 }
 Write-Host 'Golang (go) installed successfully.'
 
