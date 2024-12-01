@@ -76,7 +76,7 @@ $url = 'https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.
 Download-File -Url $url -Destination "$HOME/.vimrc"
 
 $url = 'https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.config/nvim/init.lua'
-Download-File -Url $url -Destination "$HOME/.config/nvim/init.lua"
+Download-File -Url $url -Destination "$LOCALAPPDATA/nvim/init.lua"
 
 $url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 Download-File -Url $url -Destination "$HOME/.ssh/autoload/plug.vim"
