@@ -6,8 +6,16 @@ This is the code for the `cm` assistant installed and used in the book:
 
 Run the install script to install and configure a terminal personal development environment for any Mac, Windows, or Linux machine with `apt`:
 
+Mac, Linux:
+
 ```sh
 bash -c $(curl -fsSL "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/install")
+```
+
+Windows:
+
+```powershell
+& ([scriptblock]::Create((iwr 'https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/install.ps1')))
 ```
 
 Or, install Podman Desktop, clone the repo, and build an image instead.
