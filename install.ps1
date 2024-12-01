@@ -10,7 +10,7 @@
 # - Golang (go)
 
 # Example Usage:
-# Download-File -Url $url ` -Destination $path"
+# Download-File -Url $url -Destination $path
 function Download-File {
     param (
         [Parameter(Mandatory=$true)]
@@ -79,16 +79,16 @@ if (-Not (Test-Path $path)) {
 }
 Write-Host "Neovim (nvim) installed successfully."
 
-url= "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.vimrc"
+$url = "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.vimrc"
 Download-File -Url $url -Destination $HOME/.vimrc
 
-url= "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.config/nvim/init.lua"
+$url = "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.config/nvim/init.lua"
 Download-File -Url $url -Destination $HOME/.config/nvim/init.lua
 
-url= "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.config/nvim/init.lua"
+$url = "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.config/nvim/init.lua"
 Download-File -Url $url -Destination $HOME/.config/nvim/init.lua
 
-url= "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+$url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 Download-File -Url $url -Destination $HOME/.ssh/autoload/plug.vim
 
 Write-Host "Installing Neovim (nvim) plugins..."
