@@ -103,7 +103,7 @@ Write-Host "Neovim Golang plugins installed successfully."
 
 Write-Host "Installing Golang (go) using winget..."
 winget install --id golang.go
-$path = "C:\Go\bin\go.exe"
+$path = 'C:\Go\bin\go.exe'
 if (-Not (Test-Path $path)) {
     Write-Error 'Golang (go) installation failed or not found at $path!'
     exit 1
