@@ -1,3 +1,4 @@
+
 # This script installs and configures the following:
 #
 # - Windows Terminal Preview (wt)
