@@ -1,6 +1,6 @@
 # Install Git Bash using winget
 Write-Host "Installing Git Bash using winget..."
-winget install --id git.git -e --source winget
+winget install --id git.git
 
 # Verify Git Bash installation
 $gitBashPath = "C:\Program Files\Git\bin\bash.exe"
@@ -15,15 +15,20 @@ $url = "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/install"
 Write-Host "Fetching Bash script from $url..."
 $script = Invoke-WebRequest -Uri $url -UseBasicParsing | Select-Object -ExpandProperty Content
 
-# Save the fetched script to a temporary file
-$tempScriptPath = "$env:TEMP\install.sh"
-Set-Content -Path $tempScriptPath -Value $script
-Write-Host "Bash script saved to $tempScriptPath."
+# Save the fetched script to the Git Bash default home directory with name 'install'
+$gitBashHome = "$HOME/install"  # This resolves to the Git Bash home directory
+Set-Content -Path $gitBashHome -Value $script
+Write-Host "Bash script saved to $gitBashHome."
 
-# Run the Bash script using Git Bash and display output in real-time
-Write-Host "Running the Bash script..."
-& $gitBashPath -c "`"$tempScriptPath`""
-
-# Clean up the temporary file
-#Remove-Item -Path $tempScriptPath -Force
-#Write-Host "Temporary script file removed."
+# Inform the user to manually run the script
+Write-Host ""
+Write-Host "================================================================="
+Write-Host "The Bash script has been saved to your Git Bash home directory:"
+Write-Host "  $gitBashHome"
+Write-Host ""
+Write-Host "To execute it:"
+Write-Host "1. Open a Git Bash terminal."
+Write-Host "2. Run the following command:"
+Write-Host "   ./install"
+Write-Host "================================================================="
+Write-Host ""
