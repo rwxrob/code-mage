@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+read -r -d '' helptxt <<EOF
+
+This script is used for building code-mage container and cm tool:
+
+	help
+	image
+
+For more information, see the README.md file.
+
+EOF
+
+x-help() {
+	echo "$helptxt"
+}
+
+x-image() {
+	podman build -t code-mage:latest .
+}
+
+x-run() {
+	podman run -it --network=host --name coding code-mage:latest
+}
+
+x-attach() {
+	podman start coding
+	podman attach coding
+}
+
+x-clean() {
+	podman rm --force coding
+}
+
+x-all() {
+	x-image
+}
+
+# --------------------- completion and delegation --------------------
+
+# The following provides bash completion with `complete -C build build`
+# by deriving the names of the verbs for tab completion from those
+# beginning with x- above. No other argument completion is provided.
+
+while IFS= read -r line; do
+	[[ $line =~ ^declare\ -f\ x\- ]] || continue
+	commands+=("${line##declare -f x-}")
+done < <(declare -F)
+mapfile -t commands < \
+	<(LC_COLLATE=C sort < <(printf "%s\n" "${commands[@]}"))
+
+if [[ -n $COMP_LINE ]]; then
+	line=${COMP_LINE#* }
+	for c in "${commands[@]}"; do
+		[[ ${c:0:${#line}} == "${line,,}" ]] && echo "$c"
+	done
+	exit
+fi
+
+if [[ -n "$1" ]]; then
+	declare action="$1"
+	shift
+	for c in "${commands[@]}"; do
+		declare cmd
+		cmd=$(command -v "x-$c")
+		if [[ $c == "$action" && -n "$cmd" ]]; then
+			"x-$action" "$@"
+			exit $?
+		fi
+	done
+fi
+
+x-all

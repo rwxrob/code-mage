@@ -1,0 +1,26 @@
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println(`something`)
+}
+
+/*
+url="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
+dir=$(mktemp -d)
+
+cleanup () {
+  rm -rf "$dir"
+}
+trap cleanup EXIT
+
+curl -L "$url"  -o "$dir/yq"
+chmod +x "$dir/yq"
+
+# mkdir -p is not POSIX compliant
+[ ! -d ~/.local ] && mkdir ~/.local
+[ ! -d ~/.local/bin ] && mkdir ~/.local/bin
+
+cp "$dir/yq" ~/.local/bin
+*/

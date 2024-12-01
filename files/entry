@@ -1,0 +1,111 @@
+#!/bin/sh
+
+# This script is called from the Containerfile ENTRYPOINT and stored in the
+# root of the resulting workspace container for reference. If /home has
+# anything in it then use the permissions and ownership information from
+# the first directory found within it for creating a new user on the
+# system looking into the .config/ws/config.yml file within that
+# directory for the user and group name and such. In this way, the ws
+# workspace container managment utility can pass information to podman
+# during "run" time for the container keeping the workspace containers
+# themselves as emphermal as needed.
+
+if test -e /var/run/been_built; then
+	exec sh -c "su - $(head -1 /var/run/defuser)"
+fi
+
+prompt_for_user_info() {
+
+	name="you"
+	printf "User Name (%s): " "${name}"
+	read -r val
+	test -n "${val}" && name="${val}"
+
+	userid="1000"
+	printf "User ID (%s): " "${userid}"
+	read -r val
+	test -n "${val}" && userid="${val}"
+
+	group="$name"
+	printf "Group Name (%s): " "${group}"
+	read -r val
+	test -n "${val}" && group="${val}"
+
+	groupid="1000"
+	printf "User Group (%s): " "${groupid}"
+	read -r val
+	test -n "${val}" && groupid="${val}"
+
+	home="/home/${name}"
+	printf "User Home Directory (%s): " "${home}"
+	read -r val
+	test -n "${val}" && home="${val}"
+
+	shell="/bin/bash"
+	printf "User Shell (%s): " "${shell}"
+	read -r val
+	test -n "${val}" && shell="${val}"
+
+}
+
+infer_user_info_from_home() {
+
+	name=$(stat -c "%U" "$home")
+	userid=$(stat -c "%u" "$home")
+	group=$(stat -c "%G" "$home")
+	groupid=$(stat -c "%g" "$home")
+
+	shell="$(
+		pwent="$(getent passwd "$name")"
+		echo "${pwent##*:}"
+	)"
+
+	conf="$home/.config/ws/config.yml"
+
+	if test ! -e "$conf"; then
+
+		printf "User Name (%s): " "${name}"
+		read -r val
+		test -n "${val}" && name="${val}"
+
+		printf "User Shell (%s): " "${shell}"
+		read -r val
+		test -n "${val}" && shell="${val}"
+
+		printf "Group Name (%s): " "${group}"
+		read -r val
+		test -n "${val}" && group="${val}"
+
+	else
+
+		name=$(yq .user.name "$conf")
+		shell=$(yq .user.shell "$conf")
+		group=$(yq .group.name "$conf")
+
+	fi
+
+}
+
+# detect a user home directory mount (if any)
+home=$(find /home -maxdepth 1 -mindepth 1 | head -1)
+
+if test -d "$home"; then
+	infer_user_info_from_home
+else
+	prompt_for_user_info
+fi
+
+shell_name=${shell##*/}
+if ! type "${shell_name}" >/dev/null; then
+	echo "Attempting to install shell: ${shell_name}"
+	apt install -y "${shell_name}"
+fi
+
+groupadd -g "${groupid}" "${group}"
+useradd -m -s "${shell}" -d "${home}" -u "${userid}" -g "${groupid}" "${name}"
+echo "${name} ALL=(ALL:ALL) NOPASSWD:ALL" >>/etc/sudoers
+chown -R "${name}:${group}" "${home}"
+
+touch /var/run/been_built
+echo "${name}" >/var/run/defuser
+exec su - "${name}"
