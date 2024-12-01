@@ -14,7 +14,7 @@ RUN yes | \
         shellcheck  figlet sl tree nmap ed bc iputils-ping bind9-dnsutils htop \
         libncurses5 libcurses-perl net-tools ssh sshpass sshfs rsync \
         cifs-utils smbclient bash-completion make wget less lolcat pandoc \
-        hyperfine \
+        hyperfine nodejs\
         && \
     cpan -I Term::Animation && \
     apt-get clean && \
