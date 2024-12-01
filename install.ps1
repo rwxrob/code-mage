@@ -104,10 +104,10 @@ Write-Host "Installing Golang (go) using winget..."
 winget install --id golang.go
 $path = "C:\Go\bin\go.exe"
 if (-Not (Test-Path $path)) {
-    Write-Error "Golang (go) installation failed or not found at $path!"
+    Write-Error 'Golang (go) installation failed or not found at $path!'
     exit 1
 }
-Write-Host "Golang (go) installed successfully."
+Write-Host 'Golang (go) installed successfully.'
 
 Write-Host 'Installing Code-Mage (cm) using go...'
 $path install github.com/rwxrob/code-mage/cmd/cm@latest
