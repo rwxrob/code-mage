@@ -20,17 +20,10 @@ $tempScriptPath = "$env:TEMP\install.sh"
 Set-Content -Path $tempScriptPath -Value $script
 Write-Host "Bash script saved to $tempScriptPath."
 
-# Run the Bash script using Git Bash and display output
-Write-Host "Running the Bash script and displaying output..."
-$process = Start-Process -FilePath $gitBashPath -ArgumentList "-c `"$tempScriptPath`"" -NoNewWindow -RedirectStandardOutput -RedirectStandardError -PassThru
-$process.WaitForExit()
+# Run the Bash script using Git Bash and display output in real-time
+Write-Host "Running the Bash script..."
+& $gitBashPath -c "`"$tempScriptPath`""
 
-# Capture and display the output
-$stdout = Get-Content $process.StandardOutput.BaseStream
-$stderr = Get-Content $process.StandardError.BaseStream
-Write-Output $stdout
-Write-Error $stderr
-
-# Clean up temporary file
+# Clean up the temporary file
 Remove-Item -Path $tempScriptPath -Force
 Write-Host "Temporary script file removed."
