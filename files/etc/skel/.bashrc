@@ -136,6 +136,7 @@ pathappend \
 	/usr/local/opt/coreutils/libexec/gnubin \
 	'/mnt/c/Windows' \
 	'/mnt/c/Program Files (x86)/VMware/VMware Workstation' \
+	'/mnt/c/Program Files/nodejs' \
 	/mingw64/bin \
 	/usr/local/bin \
 	/usr/local/sbin \
