@@ -4,8 +4,14 @@ This is the code for the `cm` assistant installed and used in the book:
 
 <https://rwxrob.github.io/books/code-mage>
 
-Installing with `go` is preferred:
+Run the install script to install and configure a terminal personal development environment for any Mac, Windows, or Linux machine with `apt`:
 
-```shell
-GOPROXY=direct go install github.com/rwxrob/code-mage/cmd/cm@latest
+```sh
+bash -c $(curl -fsSL "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/install")
+```
+
+Or, install Podman Desktop, clone the repo, and build an image instead.
+
+```sh
+build image
 ```
