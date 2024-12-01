@@ -134,6 +134,9 @@ pathprepend \
 
 pathappend \
 	/usr/local/opt/coreutils/libexec/gnubin \
+	'/c/Windows' \
+	'/c/Program Files (x86)/VMware/VMware Workstation' \
+	'/c/Program Files/nodejs' \
 	'/mnt/c/Windows' \
 	'/mnt/c/Program Files (x86)/VMware/VMware Workstation' \
 	'/mnt/c/Program Files/nodejs' \
