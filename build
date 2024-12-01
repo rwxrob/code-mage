@@ -4,8 +4,9 @@ read -r -d '' helptxt <<EOF
 
 This script is used for building code-mage container and cm tool:
 
-	help
-	image
+	help  - show this help
+	image - build the image locally
+	clean - remove the "coding" container
 
 For more information, see the README.md file.
 

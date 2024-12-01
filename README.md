@@ -22,4 +22,13 @@ Or, install Podman Desktop, clone the repo, and build an image instead.
 
 ```sh
 build image
+build run
 ```
+
+Then later ...
+
+```sh
+build attach
+```
+
+We build the image to get the latest and reduce unnecessary package storage and upkeep.
