@@ -31,7 +31,7 @@ var PlugVim string
 //go:embed files/alacritty.toml
 var AlacrittyTOML string
 
-func InitBashRC() error {
+func InitBash() error {
 	dir, err := futil.UserHomeDir()
 	if err != nil {
 		return err
@@ -64,7 +64,7 @@ func InitVimPlugins() error {
 }
 
 func InitVim() error {
-	if err := InitVim(); err != nil {
+	if err := InitVimRC(); err != nil {
 		return err
 	}
 	return InitVimPlugins()
