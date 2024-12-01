@@ -1,39 +1,23 @@
-#!/usr/bin/env bash
-
-# This installer has no dependencies on anything but bash 3.2 and is
-# intended to be run from the command line remotely with something like
-# the following:
+# This script installs and configures the following:
 #
-# bash -c "$(curl -fsSL https://rwxrob.github.io/code-mage/install)"
-#
-# This script only supports Windows, Linux, and Darwin
-
-iswin() {
-	return 1
-}
+# - Windows Terminal Preview (wt)
+# - gruvbox-material theme
+# - UbuntuMonoNerd font
+# - Git Bash (bash, git, vim)
+# - GitHub CLI (gh)
+# - Neovim (nvim)
+# - Golang (go)
 
 ismac() {
 	return 1
 }
 
-islin() {
-	return 1
-}
-
 [[ -z "$OS" ]] && OS=$(uname)
 case "$OS" in
-*indows*) iswin() {
-	return 0
-} ;;
 *arwin*) ismac() {
 	return 0
 } ;;
-*inux*) islin() {
-	return 0
-} ;;
-*) echo "Unsupported OS: $OS" && exit 1 ;;
 esac
-export OS
 
 have() { type "$1" &>/dev/null; }
 
@@ -60,16 +44,8 @@ config-bash() {
 }
 
 install-alacritty() {
-	if have alacritty; then
-		echo "Have alacritty, skipping."
-		return
-	fi
 	if ismac; then
 		brew install alacritty
-		return
-	fi
-	if iswin; then
-		winget install --id alacritty.alacritty
 		return
 	fi
 	sudo add-apt-repository ppa:aslatter/ppa
@@ -78,10 +54,6 @@ install-alacritty() {
 }
 
 config-alacritty() {
-	if iswin && test -e "$APPDATA/alacritty/alacritty.toml"; then
-		echo "Alacritty config detected, skipping."
-		return
-	fi
 	if test -e ~/.config/alacritty/alacritty.toml; then
 		echo "Alacritty config detected, skipping."
 		return
@@ -92,10 +64,6 @@ config-alacritty() {
 }
 
 install-ubuntu-mono-nerd-font() {
-	if iswin; then
-		powershell -Command "& ([scriptblock]::Create((iwr 'https://to.loredo.me/Install-NerdFont.ps1'))) -Name ubuntu-mono"
-		return
-	fi
 	if test -e ~/.local/share/fonts/UbuntuMonoNerdFont-Regular.ttf; then
 		echo "UbuntuMonoNerdFont detected, skipping."
 		return
@@ -109,10 +77,6 @@ install-ubuntu-mono-nerd-font() {
 install-neovim() {
 	if have nvim; then
 		echo "nvim detected, skipping."
-		return
-	fi
-	if iswin; then
-		winget install --id neovim.neovim
 		return
 	fi
 	if ismac; then
@@ -141,10 +105,6 @@ config-neovim() {
 install-go() {
 	if have go; then
 		echo "go detected, skipping."
-		return
-	fi
-	if iswin; then
-		winget install --id golang.go
 		return
 	fi
 	if ismac; then
