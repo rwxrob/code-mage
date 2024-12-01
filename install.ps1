@@ -32,5 +32,5 @@ Write-Output $stdout
 Write-Error $stderr
 
 # Clean up temporary file
-#Remove-Item -Path $tempScriptPath -Force
-#Write-Host "Temporary script file removed."
+Remove-Item -Path $tempScriptPath -Force
+Write-Host "Temporary script file removed."
