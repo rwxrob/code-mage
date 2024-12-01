@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 # This installer has no dependencies on anything but bash 3.2 and is
 # intended to be run from the command line remotely with something like
@@ -40,6 +39,7 @@ have() { type "$1" &>/dev/null; }
 
 install-brew() {
 	if have brew; then
+		echo "Have brew, skipping."
 		return
 	fi
 	bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -47,6 +47,7 @@ install-brew() {
 
 update-mac-bash() {
 	if [[ ! $BASH_VERSION =~ ^3 ]]; then
+		echo "bash version above three, skipping."
 		return
 	fi
 	echo "$(brew --prefix)/bin/bash" | sudo tee -a /etc/shells
@@ -55,10 +56,12 @@ update-mac-bash() {
 
 config-bash() {
 	curl -fsSL "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.bashrc" -o ~/.bashrc
+	echo 'bashrc overwritten'
 }
 
 install-alacritty() {
 	if have alacritty; then
+		echo "Have alacritty, skipping."
 		return
 	fi
 	if ismac; then
@@ -75,7 +78,8 @@ install-alacritty() {
 }
 
 config-alacritty() {
-	if have alacritty; then
+	if test -e ~/.config/alacritty/alacritty.toml; then
+		echo "Alacritty config detected, skipping."
 		return
 	fi
 	mkdir -p ~/.config/alacritty
@@ -88,7 +92,8 @@ install-ubuntu-mono-nerd-font() {
 		powershell -Command "& ([scriptblock]::Create((iwr 'https://to.loredo.me/Install-NerdFont.ps1'))) -Name ubuntu-mono"
 		return
 	fi
-	if test -e ~/.local/share/fonts/UbuntuMono.zip; then
+	if test -e ~/.local/share/fonts/UbuntuMonoNerdFont-Regular.ttf; then
+		echo "UbuntuMonoNerdFont detected, skipping."
 		return
 	fi
 	curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/UbuntuMono.zip ~/.local/share/fonts
@@ -99,6 +104,7 @@ install-ubuntu-mono-nerd-font() {
 
 install-neovim() {
 	if have nvim; then
+		echo "nvim detected, skipping."
 		return
 	fi
 	if iswin; then
@@ -114,6 +120,7 @@ install-neovim() {
 
 config-neovim() {
 	if have nvim; then
+		echo "nvim detected, skipping configuration."
 		return
 	fi
 	curl -fsSL "https://raw.githubusercontent.com/rwxrob/code-mage/HEAD/files/etc/skel/.vimrc" -o ~/.vimrc
@@ -129,6 +136,7 @@ config-neovim() {
 
 install-go() {
 	if have go; then
+		echo "go detected, skipping."
 		return
 	fi
 	if iswin; then
