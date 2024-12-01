@@ -81,6 +81,10 @@ Download-File -Url $url -Destination "$LOCALAPPDATA/nvim/init.lua"
 $url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 Download-File -Url $url -Destination "$HOME/.ssh/autoload/plug.vim"
 
+Write-Host 'Installing NodeJS (required by coc.nvim) plugin...'
+winget install --id openjs.nodejs
+Write-Host 'NodeJS installed successfully.'
+
 Write-Host 'Installing Neovim (nvim) plugins...'
 nvim +PlugInstall +qa
 # TODO validate plugin install

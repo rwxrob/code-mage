@@ -81,9 +81,11 @@ install-neovim() {
 	fi
 	if ismac; then
 		brew install neovim
+		brew install nodejs
 		return
 	fi
 	sudo apt-get install -y neovim
+	sudo apt-get install -y nodejs
 }
 
 config-neovim() {
