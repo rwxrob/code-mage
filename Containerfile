@@ -10,10 +10,11 @@ RUN yes | \
     apt-get update && \
     apt-get install -y \
         apt-utils build-essential apt-transport-https  ca-certificates \
-        curl neovim tmux dialog perl python-is-python3 gh jq sudo lynx w3m \
-        shellcheck  figlet sl tree nmap ed bc iputils-ping bind9-dnsutils htop \
-        libncurses5 libcurses-perl net-tools ssh sshpass sshfs rsync \
-        cifs-utils smbclient bash-completion make wget less lolcat pandoc \
+        curl tmux dialog perl python-is-python3 gh jq sudo lynx w3m \
+        shellcheck  figlet sl tree nmap ed bc iputils-ping \
+        bind9-dnsutils htop libncurses5 libcurses-perl net-tools \
+        ssh sshpass sshfs rsync  cifs-utils smbclient \
+        bash-completion make wget less lolcat pandoc \
         hyperfine nodejs\
         && \
     cpan -I Term::Animation && \
@@ -22,5 +23,6 @@ RUN yes | \
     cat /dev/null > /var/log/dmesg
 
 COPY ./files/. ./Containerfile /
+RUN /mkskel && /dot/install/nvim
 
 ENTRYPOINT ["sh","/entry"]

@@ -1,14 +1,16 @@
 #!/bin/sh
 
-# This script is called from the Containerfile ENTRYPOINT and stored in the
-# root of the resulting workspace container for reference. If /home has
-# anything in it then use the permissions and ownership information from
-# the first directory found within it for creating a new user on the
-# system looking into the .config/ws/config.yml file within that
-# directory for the user and group name and such. In this way, the ws
-# workspace container managment utility can pass information to podman
-# during "run" time for the container keeping the workspace containers
-# themselves as emphermal as needed.
+: <<EOM
+This script is called from the Containerfile ENTRYPOINT and stored
+in the root of the resulting workspace container for reference. If
+/home has anything in it then use the permissions and ownership
+information from the first directory found within it for creating
+a new user on the system looking into the .config/ws/config.yml
+file within that directory for the user and group name and such.
+In this way, the ws workspace container managment utility can pass
+information to podman during "run" time for the container keeping
+the workspace containers themselves as emphermal as needed.
+EOM
 
 if test -e /var/run/been_built; then
 	exec sh -c "su - $(head -1 /var/run/defuser)"
@@ -46,10 +48,6 @@ prompt_for_user_info() {
 	read -r val
 	test -n "${val}" && shell="${val}"
 
-	goplug=n
-	printf "GoInstallBinaries? (%s): " "${goplug}"
-	read -r val
-	test -n "${val}" && goplug="${val}"
 }
 
 infer_user_info_from_home() {
@@ -58,7 +56,6 @@ infer_user_info_from_home() {
 	userid=$(stat -c "%u" "$home")
 	group=$(stat -c "%G" "$home")
 	groupid=$(stat -c "%g" "$home")
-	goplug=$(stat -c "%g" "$home")
 
 	shell="$(
 		pwent="$(getent passwd "$name")"
@@ -110,13 +107,6 @@ groupadd -g "${groupid}" "${group}"
 useradd -m -s "${shell}" -d "${home}" -u "${userid}" -g "${groupid}" "${name}"
 echo "${name} ALL=(ALL:ALL) NOPASSWD:ALL" >>/etc/sudoers
 chown -R "${name}:${group}" "${home}"
-
-su - "${name}" -c "nvim --headless +PlugInstall +qall"
-
-if [ "$goplug" = y ]; then
-	echo "Running GoInstallBinaries"
-	su - "${name}" -c "nvim --headless +GoInstallBinaries +qall"
-fi
 
 touch /var/run/been_built
 echo "${name}" >/var/run/defuser

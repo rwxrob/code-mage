@@ -1,0 +1,18 @@
+#!/bin/sh
+
+git clone https://github.com/rwxrob/dot-template /dot
+
+# bash
+cp /dot/bash/bashrc /etc/skel/.bashrc
+cp /dot/bash/inputrc /etc/skel/.inputrc
+cp /dot/bash/dircolors /etc/skel/.dircolors
+
+# vim
+mkdir -p /etc/skel/.vim/autoload
+mkdir -p /etc/skel/.config/nvim
+cp /dot/vim/vimrc /etc/skel/.vimrc
+cp /dot/vim/init.lua /etc/skel/.config/nvim/init.lua
+cp /dot/vim/plug.vim /etc/skel/.vim/autoload/plug.vim
+
+#tmux
+cp /dot/tmux/tmux.conf /etc/skel/.tmux.conf
