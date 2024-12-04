@@ -18,7 +18,6 @@ RUN yes | \
         && \
     cpan -I Term::Animation && \
     apt-get clean && \
-    vim +PlugInstall +GoInstallBinaries +qall && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/log/dmesg.* && \
     cat /dev/null > /var/log/dmesg
 

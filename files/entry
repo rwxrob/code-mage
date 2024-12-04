@@ -46,6 +46,10 @@ prompt_for_user_info() {
 	read -r val
 	test -n "${val}" && shell="${val}"
 
+	goplug=n
+	printf "GoInstallBinaries? (%s): " "${goplug}"
+	read -r val
+	test -n "${val}" && goplug="${val}"
 }
 
 infer_user_info_from_home() {
@@ -54,6 +58,7 @@ infer_user_info_from_home() {
 	userid=$(stat -c "%u" "$home")
 	group=$(stat -c "%G" "$home")
 	groupid=$(stat -c "%g" "$home")
+	goplug=$(stat -c "%g" "$home")
 
 	shell="$(
 		pwent="$(getent passwd "$name")"
@@ -105,6 +110,13 @@ groupadd -g "${groupid}" "${group}"
 useradd -m -s "${shell}" -d "${home}" -u "${userid}" -g "${groupid}" "${name}"
 echo "${name} ALL=(ALL:ALL) NOPASSWD:ALL" >>/etc/sudoers
 chown -R "${name}:${group}" "${home}"
+
+su - "${name}" -c "nvim --headless +PlugInstall +qall"
+
+if [ "$goplug" = y ]; then
+	echo "Running GoInstallBinaries"
+	su - "${name}" -c "nvim --headless +GoInstallBinaries +qall"
+fi
 
 touch /var/run/been_built
 echo "${name}" >/var/run/defuser

@@ -4,9 +4,13 @@ read -r -d '' helptxt <<EOF
 
 This script is used for building code-mage container and cm tool:
 
-	help  - show this help
-	image - build the image locally
-	clean - remove the "coding" container
+	help   - show this help
+	image  - build the image locally
+	run    - run a "coding" container from the image
+	attach - start and attach to "coding" container
+	rm     - remove the "coding" container
+	clean  - remove the "coding" container and image
+	init   - clean and then run
 
 For more information, see the README.md file.
 
@@ -29,8 +33,19 @@ x-attach() {
 	podman attach coding
 }
 
-x-clean() {
+x-rm() {
 	podman rm --force coding
+}
+
+x-clean() {
+	x-rm
+	podman image rm --force code-mage
+}
+
+x-init() {
+	x-clean
+	x-image
+	x-run
 }
 
 x-all() {
